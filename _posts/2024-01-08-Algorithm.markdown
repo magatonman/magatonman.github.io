@@ -17,7 +17,7 @@ tags:
 
 대표적인 방법으로, 세로셈을 이용해 시간복잡도를 완화하는 방법이 있다.
 
-![세로셈](https://github.com/magatonman/magatonman.github.io/assets/47918242/ddd7d8aa-8684-4906-aad2-525bd4ec5235)
+![세로셈](https://github.com/magatonman/magatonman.github.io/assets/47918242/eaac3474-0a5d-49cd-8189-db8e1307764e)
 
 
 이 경우 각 덧셈 과정의 시간복잡도는 $O(n)$이고 $n$비트의 수에 대해서 이 반복 연산은 최대 $n$번 이루어지므로($X=2^n-1$인 경우) 시간복잡도는 $O(n^2)$가 된다.
