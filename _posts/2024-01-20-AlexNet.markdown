@@ -10,23 +10,25 @@ tags:
   - ML
 ---
 # AlexNet
-AlexNet은 딥러닝에서 CNN 기법의 태동기를 열었다고 할 수 있는 
-# ImageNet
+AlexNet은 딥러닝에서 CNN 기법의 태동기를 열었다고 할 수 있는 기계학습 모델로, 이미지 인식 알고리즘 경진대회인 ImageNet Large Scale Visual Recognition Challenge(ILSVRC) 대회에서 2012년에 우승한 바 있다.
+
+AlexNet이라는 이름은 논문의 첫 번째 저자가 토론토대의 Alex Krizhevsky이기 때문에 그의 이름을 따서 지어졌다. (다른 두 명은 Ilya Sutskever, Geoffery E.Hinton)
+# ImageNet이란?
 라벨링된 이미지들로 이루어진 데이터베이스다.
 
 웹에서 1500만 개 이상의 이미지를 수집한 다음, Amazon's Mechanical Turk라는 서비스를 통해 모집한 인력이 수기로 태그를 다는 방식으로 만들어졌다.
 
-이 논문에서는 이미지를 $256 \times 256$ 크기로 다운샘플링해 고정해서 이용한다.
+앞에서 말한 경진대회인 ImageNet Large Scale Visual Recognition Challenge(ILSVRC)를 주최하는 것도 ImageNet인데, 이 대회에서 최초로 우승한 CNN 기반의 모델이 바로 AlexNet이다.
 
+이 논문에서는 ImageNet의 이미지들을 $256 \times 256$ 크기로 다운샘플링해 고정해서 이용한다.
 # Architecture of AlexNet
 ![Alexnet Architecture](https://github.com/magatonman/magatonman.github.io/assets/47918242/8f14dad0-1276-463c-a454-33609732bc46)
 
 Alexnet은 Convolutional 레이어 5개와 Fully-Connected 레이어 3개로 이루어져 있다. 
 
-첫 번째 CNN은 $227\times 227\times 3$[^1] 크기의 입력값(이미지는 RGB이므로 채널은 3개)을 받아 $11\times 11\times 3$ 크기의 커널 96개를 이용하고, 스트라이드 크기를 4로 한다. (이 단계에는 패딩이 없다.)
+첫 번째 CNN은 $227\times 227\times 3$[^1] 크기의 입력값(이미지는 RGB이므로 채널은 3개)을 받아 $11\times 11\times 3$ 크기의 커널 96개를 이용하고, 스트라이드 크기를 4로 한다. 스트라이드 크기가 4로 이 모델 내에서 가장 큰 것은 이미지의 크기를 줄여 계산을 줄이기 위해서이다.
 
-
-스트라이드 크기가 4로 이 모델 내에서 가장 큰 것은 이미지의 크기를 줄여 계산을 줄이기 위해서이다.
+출력되는 이미지의 크기를 식 $\lfloor\frac{(N-K)}{S}\rfloor+1$을 통해 계산하면, $ \lfloor(227-11)/4\rfloor+1=55$가 된다.
 
 두 번째 CNN은 $5\times 5\times 48$ 크기의 커널 256개를 이용한다.
 
@@ -38,10 +40,24 @@ Alexnet은 Convolutional 레이어 5개와 Fully-Connected 레이어 3개로 이
 
 즉 AlexNet의 구조를 표로 정리하면, 이하와 같다.
 
-|이름|크기|
-|---|---|
-|입력값|$224\times 224\times 3$
+|이름|크기|커널|스트라이드|패딩|활성화함수|
+|---|---|---|---|---|---|
+|입력값|$227\times227\times3$|-|-|-|-|
+|Conv1|$55\times 55\times 96$|$11\times 11\times 3$|4|X|ReLU|
+|MaxPool1|$27\times27\times96$|$3\times3$|2|-|-|
+|Norm1|$27\times27\times96$|-|-|-|-|
+|Conv2|$27\times27\times256$|$5\times 5\times 48$|1|2|ReLU|
+|MaxPool2|$13\times13\times256$|$3\times 3$|2|-|-|
+|Norm2|$13\times13\times256$|-|-|-|-|
+|Conv3|$13\times13\times384$|$3\times 3\times 256$|1|1|ReLU|
+|Conv4|$13\times13\times384$|$3\times 3\times 192$|1|1|ReLU|
+|Conv5|$13\times13\times256$|$3\times 3\times 192$|1|1|ReLU|
+|MaxPool3|$6\times6\times256 \rightarrow9216$(flatten)|$3\times 3$|2|-|-|
+|FC6|4096|-|-|-|ReLU|
+|FC7|4096|-|-|-|ReLU|
+|FC8|1000|-|-|-|Softmax|
 
+# AlexNet에서 사용한 기술들
 ## ReLU
 논문 발표 당시에는 대체로 신경망의 출력에 활성화 함수로 $\text{tanh}$나 시그모이드($\sigma(x)=\frac{1}{1+e^{-x}}$)를 사용했다.
 
@@ -56,6 +72,9 @@ AlexNet에서는 모든 과정에서 활성화함수로 ReLU를 사용했다.
 ## 다수의 GPU에서 훈련
 논문 작성 시 사용했던 그래픽카드인 GTX 580의 용량은 3GB에 불과했고(현재 RTX 4090이 24GB), 논문에서 훈련할 샘플들은 120만개였기 때문에 그래픽카드 2개를 붙여서 이용했다. 이렇게 했음에도, 논문을 작성할 때 훈련에 걸린 시간은 5~6일이나 걸렸다고 한다.
 ## LRN
+생물학에서 특정 뉴런이 주변 뉴런의 활성화를 억제한다는 개념인 [측면 억제](https://terms.naver.com/entry.naver?docId=5669842&cid=63057&categoryId=63057)를 구현화한 것이다.
+
+
 $a^i_{x, y}$를 $(x, y)$ 좌표의 값을 커널 $i$로 계산하고, ReLU 함수를 적용해서 나온 값이라고 하자. 그리고 이 값을 이하의 수식에 집어넣는다.
 
 $$b^i_{x, y}=a^i_{x, y}/\big(k+\alpha\sum_{j=\max(0, i-n/2)}^{\min(N-1,i+n/2)}(a^j_{x, y})^2\big)^\beta$$
@@ -74,21 +93,20 @@ $$b^i_{x, y}=a^i_{x, y}/\big(k+\alpha\sum_{j=\max(0, i-n/2)}^{\min(N-1,i+n/2)}(a
 
 AlexNet에서 사용한 하이퍼파라미터의 값은 $k=2, n=5, \alpha=10^{-4}, \beta=0.75$다.
 
-
 ## 풀링 간의 중첩
 AlexNet 이전에는 풀링을 적용할 때 스트라이드 값을 조절해서 풀링 간에 중첩이 일어나지 않게 했다.
 
 AlexNet에서 스트라이드의 크기를 2, 3으로 잡았을 때는 top-1 에러와 top-5 에러의 값이 각각 0.4%, 0.3% 감소했다.
 
-# 과적합 최소화
-## 데이터 증식
+## 과적합 최소화
+### 데이터 증식
 원래 입력값으로 받은 이미지와 유사한 이미지를 추가로 학습해서 과적합을 줄이는 방법이다. 
 
 논문에서는 이 데이터 증식 과정은 GPU가 기존의 이미지들로 학습을 수행하는 동안 CPU에서 파이썬을 통해 이루어질 수 있도록 했다고 한다.
 
 데이터 증식 과정은 아래의 두 과정으로 이루어졌다.
 
-1) 이미지 안에서 $244 \times 244$ 크기의 패치를 임의로 추출하고, 패치의 좌우 반전 버전도 따로 보관해 둔다. 이 때문에 첫 번째 CNN에 들어가는 입력 이미지의 크기가 $244\times244\times3$인 것이다. 테스트 과정에서는 이미지 1개당 상하좌우 꼭짓점을 기준으로 하는 패치와 정중앙을 중심으로 하는 패치, 총합 5개의 패치를 생성했으며(실제로는 좌우반전된 것도 따져야 하므로 10개), 이 패치들에 대해 네트워크의 softmax 레이어의 예측값의 평균치를 통해 원래 이미지의 예측값을 정했다.
+1) 이미지 안에서 $227 \times 227$ 크기의 패치를 임의로 추출하고, 패치의 좌우 반전 버전도 따로 보관해 둔다. 이 때문에 첫 번째 CNN에 들어가는 입력 이미지의 크기가 $227\times227\times3$인 것이다. 테스트 과정에서는 이미지 1개당 상하좌우 꼭짓점을 기준으로 하는 패치와 정중앙을 중심으로 하는 패치, 총합 5개의 패치를 생성했으며(실제로는 좌우반전된 것도 따져야 하므로 10개), 이 패치들에 대해 네트워크의 softmax 레이어의 예측값의 평균치를 통해 원래 이미지의 예측값을 정했다.
 
 2) 이미지의 RGB 채널에 대해 강도를 수정하였다. 훈련 데이터들의 RGB 픽셀 값에 대해 PCA를 실행했고, 그렇게 구한 값에 평균 0, 표준편차 0.1인 가우시안 확률변수의 값을 원래
 
@@ -97,9 +115,10 @@ AlexNet에서 스트라이드의 크기를 2, 3으로 잡았을 때는 top-1 에
 이 식에서 $p_i, \lambda_i$는 각각 픽셀 $i$의 $3\times3$ 공분산 행렬의 고유값과 고유벡터고, $\alpha_i$는 임의로 선정된 확률변수다.
 
 이 과정은 형광등과 태양광 등, 조명의 색감이 바뀌는 경우에 대해 내성을 부여하기 위해서 이루어졌다.
-## 드롭아웃
+### 드롭아웃
 AlexNet은 드롭아웃 기법이 막 소개된 당시에 만들어진 모델이다.
 
 AlexNet에서 드롭아웃 기법은 최초의 Fully-Connected 레이어 2개에 사용되었다.
 
-\[^1]: 논문에는 224라고 적혀 있는데, 잘못 작성된 것이고 실제로는 227이 맞다고 한다.
+# 출처
+[Krizhevsky, A., Sutskever, I., & Hinton, G. E. (2012). ImageNet Classification with Deep Convolutional Neural Networks. Neural Information Processing Systems, 25, 1097–1105.](https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf)
