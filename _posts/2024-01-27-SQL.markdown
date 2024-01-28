@@ -1,0 +1,95 @@
+---
+title:  "SQL Operations"
+excerpt: "SQL 문법 정리"
+last_modified_at: 2024-01-28
+categories:
+  - DB
+tags:
+  - DB
+---
+# 기본 문법
+```sql
+SELECT Attributes
+FROM Relations
+WHERE Predicate
+```
+
+## SELECT
+* 대소문자 구별이 없다.
+
+* 중복 여부를 판정하지 않는다. 중복을 제거하기 위해서는 SELECT distinct와 같은 형태로 이용해야 한다.
+```sql
+SELECT distinct 
+```
+* 테이블의 모든 원소를 선택하려면 SELECT *를 사용한다.
+```sql
+
+```
+* 연산자를 같이 쓰는 것도 가능하다. 
+## WHERE
+검색 조건을 제한하는 용도의 구문이다.
+* and, or, not, <, <=, >, >=, <>(부정 연산자)가 사용 가능하다. 
+
+## FROM
+## AS
+만들어낸 검색 결과를 새로운 제목의 릴레이션으로 만들고 싶을 때 이용한다.
+
+## LIKE
+부분적으로 일치하는 문자열을 검색할 때 이용한다.
+* %: 어떠한 문자열과도 대응 가능하다. (글자수 상관 없음)
+* _: 어떠한 문자와도 대응 가능하다. (한 글자에만 대응함)
+### 예시
+```sql
+WHERE P LIKE '%A' 
+WHERE P LIKE '_A'
+```
+* 전자의 경우는 'BA', 'CA', 'BBA', 'CBA', 'BBBBBBBBA' 전부 해당한다.
+* 후자의 경우 'BA', 'CA'는 해당하지만, 'BBA', 'CBA', 'BBBBBBBBA'는 해당하지 않는다.
+### ESCAPE
+LIKE를 사용할 때, %나 _를 와일드카드가 아닌 문자로 사용하고 싶을 때 추가적으로 이용한다.
+```sql
+WHERE P LIKE '\%A' ESCAPE '\'
+WHERE P LIKE 'b%A' ESCAPE 'b'
+```
+### BETWEEN
+비교 연산자를 축약해서 이용할 수 있다.
+```sql
+WHERE P between 50 AND 70
+```
+이 경우 50 이상 70 이하인 항만 출력한다.
+## UNION
+두 SELECT문의 합집합을 출력한다.
+```SQL
+SELECT P FROM A WHERE Q='X' AND R<=10
+UNION
+SELECT P FROM A WHERE Q='Y' AND R>=20
+```
+이 경우 Q가 X면서 R이 10 이하이거나, Q가 Y면서 R이 20 이상인 경우를 출력한다.
+## INTERSECT
+두 SELECT문의 교집합을 출력한다.
+```SQL
+SELECT P FROM A WHERE Q='X' AND R<=10
+INTERSECT
+SELECT P FROM A WHERE Q='Y' AND R>=20
+```
+이 경우 Q가 X면서 10 이하인 동시에 Q가 Y면서 20 이상인 경우를 출력한다.
+## EXCEPT
+두 SELECT문의 차집합을 출력한다.
+```SQL
+SELECT P FROM A WHERE Q='X' AND R<=10
+EXCEPT
+SELECT P FROM A WHERE Q='Y' AND R>=20
+```
+이 경우 Q가 X면서 10 이하이지만 Q가 Y면서 20 이상인 경우는 포함하지 않는다.
+
+## 집계 함수
+* AVG: 평균값
+* MIN: 최솟값
+* MAX: 최댓값
+* SUM: 합계
+* COUNT: 개수
+### GROUP BY
+특정 릴레이션의 결과를 한 개로 묶는 데 이용한다.
+
+### HAVING
+WHERE와 유사하나, GROUP BY 이후에 사용할 수 있다.
