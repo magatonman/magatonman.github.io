@@ -77,6 +77,7 @@ LIKE를 사용할 때, %나 _를 와일드카드가 아닌 문자로 사용하�
 
 ```sql
 WHERE P LIKE '\%A' ESCAPE '\'
+
 WHERE P LIKE 'b%A' ESCAPE 'b'
 ```
 
@@ -93,7 +94,7 @@ WHERE P between 50 AND 70
 
 두 SELECT문의 합집합을 출력한다.
 
-```SQL
+```sql
 SELECT P FROM A WHERE Q='X' AND R<=10
 UNION
 SELECT P FROM A WHERE Q='Y' AND R>=20
@@ -105,7 +106,7 @@ SELECT P FROM A WHERE Q='Y' AND R>=20
 
 두 SELECT문의 교집합을 출력한다.
 
-```SQL
+```sql
 SELECT P FROM A WHERE Q='X' AND R<=10
 INTERSECT
 SELECT P FROM A WHERE Q='Y' AND R>=20
@@ -117,7 +118,7 @@ SELECT P FROM A WHERE Q='Y' AND R>=20
 
 두 SELECT문의 차집합을 출력한다.
 
-```SQL
+```sql
 SELECT P FROM A WHERE Q='X' AND R<=10
 EXCEPT
 SELECT P FROM A WHERE Q='Y' AND R>=20
