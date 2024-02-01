@@ -19,20 +19,41 @@ WHERE Predicate
 
 * 중복 여부를 판정하지 않는다. 중복을 제거하기 위해서는 SELECT distinct와 같은 형태로 이용해야 한다.
 ```sql
-SELECT distinct 
+SELECT DISTINCT A 
+SELECT ALL A
 ```
-* 테이블의 모든 원소를 선택하려면 SELECT *를 사용한다.
-```sql
 
+* 전자는 중복 원소가 있으면 제거하고 보여주고, 후자는 중복 원소를 원 상태 그대로 보여준다.
+
+
+* 테이블의 모든 릴레이션을 선택하려면 SELECT *를 사용한다.
+```sql
+SELECT *
 ```
-* 연산자를 같이 쓰는 것도 가능하다. 
+
+* 연산자를 같이 쓰는 것도 가능하다.
+```sql
+SELECT A/12
+```
 ## WHERE
 검색 조건을 제한하는 용도의 구문이다.
 * and, or, not, <, <=, >, >=, <>(부정 연산자)가 사용 가능하다. 
+```SQL
+WHERE A<5
+WHERE A>5
+WHERE A<=5
+WHERE A>=5
+WHERE A<>5
+```
 
 ## FROM
+어떤 테이블의 정보를 조회할지 정하는 구문이다.
 ## AS
 만들어낸 검색 결과를 새로운 제목의 릴레이션으로 만들고 싶을 때 이용한다.
+```sql
+SELECT A AS 'new'
+```
+생략 가능.
 
 ## LIKE
 부분적으로 일치하는 문자열을 검색할 때 이용한다.
@@ -93,3 +114,4 @@ SELECT P FROM A WHERE Q='Y' AND R>=20
 
 ### HAVING
 WHERE와 유사하나, GROUP BY 이후에 사용할 수 있다.
+
