@@ -35,9 +35,12 @@ SELECT *
 ```sql
 SELECT A/12
 ```
+
 ## WHERE
 검색 조건을 제한하는 용도의 구문이다.
+
 * and, or, not, <, <=, >, >=, <>(부정 연산자)가 사용 가능하다. 
+
 ```SQL
 WHERE A<5
 WHERE A>5
