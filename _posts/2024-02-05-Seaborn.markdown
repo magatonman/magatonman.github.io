@@ -1,0 +1,140 @@
+---
+title:  "Seaborn 사용법"
+excerpt: "Seaborn"
+last_modified_at: 2024-02-02
+categories:
+  - Seaborn
+tags:
+  - Seaborn
+  - Python
+---
+# Seaborn
+Matplotlib의 개량형 라이브러리로, 시각화 면에서 Matplotlib보다 고급화된 기능을 제공한다.
+# 설치법
+```python
+pip install seaborn #설치
+
+conda install seaborn # 아나콘다 사용 시 설치법
+```
+# 사용법
+일반적으로 Seaborn 모듈은 'sns' 라는 이름으로 임포트한다.
+```python
+import numpy as np
+import pandas as pd
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+import seaborn as sns
+import seaborn.objects as so
+
+df=sns.load_dataset("penguins")
+sns.pairplot(df, hue="species")
+```
+
+데이터셋을 불러올 때에는 ```sns.load_dataset``` 명령어를 이용하며, pairplot 명령어를 실행하면 이하와 같은 결과가 나온다.
+
+![펭귄](https://github.com/magatonman/magatonman.github.io/assets/47918242/289a57f3-2feb-496c-978e-f0e3b4ab0913)
+
+
+# sns.set_theme()
+그래프의 색깔이나 글꼴 등을 설정한다.
+
+```
+seaborn.set_theme(context, style, pallete, font, font_scale, color_code, rc)
+```
+
+* context: 라벨이나 그래프의 크기 비율을 정해 준다. {paper, notebook, talk, poster} 중 한 개를 고를 수 있다.
+* style: 눈금의 표시 방법을 정한다. {darkgrid, whitegrid, dark, white, ticks} 중 한 개를 고를 수 있다.
+* pallete: 색상을 고를 수 있다.
+* font: 폰트 종류를 결정한다.
+* font_scale: 폰트 크기를 결정한다.
+* color_codes: True나 False만 가능하며, True고 pallete가 seaborn
+* rc: 사전에 설정해 놓은 테마 설정을 불러올 수 있다.
+
+# 시각화
+```python
+tips=sns.load_dataset("tips")
+
+sns.relplot(
+    data=tips,
+    x="total_bill", y="tip", col="time",
+    hue="smoker", style="smoker", size="size",
+)
+```
+![introduction_1_0](https://github.com/magatonman/magatonman.github.io/assets/47918242/5a3ba588-a24b-4cf5-8541-cff1684b0514)
+
+# 그래프 종류
+## 산점도
+sns.scatterplot()을 이용한다.
+```python
+sns.scatterplot(data=tips, x="total_bill", y="tip", hue="smoker")
+```
+![산점](https://github.com/magatonman/magatonman.github.io/assets/47918242/96d5a489-211d-4529-bfd4-9c95e9d91096)
+
+## 선형 그래프
+sns.lineplot()을 이용한다.
+```python
+sns.lineplot(data=tips, x="total_bill", y="tip", hue="smoker")
+```
+![선형](https://github.com/magatonman/magatonman.github.io/assets/47918242/dbd21398-4321-4667-bf53-701e0e421410)
+## 신뢰구간
+이하의 두 함수는 전부 신뢰구간을 그래프와 함께 출력해 준다.
+### sns.relplot
+
+sns.scatterplot과 sns.lineplot 양쪽에 대응하는 함수로, kind 값을 "scatter"와 "line" 중 하나로 설정하는 것으로 원하는 쪽을 이용할 수 있다.
+
+
+```python
+fmri = sns.load_dataset("fmri")
+sns.relplot(
+    data=fmri, kind="line",
+    x="timepoint", y="signal", col="region",
+    hue="event", style="event",
+)
+```
+![introduction_13_0](https://github.com/magatonman/magatonman.github.io/assets/47918242/4c5b7066-155e-4732-9476-e8cbedab2043)
+### 선형 회귀
+sns.lmplot을 사용하면 회귀선을 출력할 수 있다.
+```python
+sns.lmplot(data=tips, x="total_bill", y="tip", col="time", hue="smoker")
+```
+![introduction_15_0](https://github.com/magatonman/magatonman.github.io/assets/47918242/6f1f1ca2-931e-47f3-8dcc-6ec6962f1f51)
+
+## 분산형
+
+sns.displot()을 이용한다.
+
+### 일반적인 경우
+```python
+sns.displot(data=tips, x="total_bill", col="time", kde=True)
+```
+![introduction_17_0](https://github.com/magatonman/magatonman.github.io/assets/47918242/294164d9-3774-4f0d-b4d9-22f60f308d60)
+### ECDF
+```python
+sns.displot(data=tips, kind="ecdf", x="total_bill", col="time", hue="smoker", rug=True)
+```
+![introduction_19_0](https://github.com/magatonman/magatonman.github.io/assets/47918242/86fc61e3-6623-460f-b49b-bce2450fb780)
+
+## 범주형
+### Swarm
+```python
+sns.catplot(data=tips, kind="swarm", x="day", y="total_bill", hue="smoker")
+```
+![introduction_21_0](https://github.com/magatonman/magatonman.github.io/assets/47918242/913076a2-90fd-499a-9cc1-3e3a4cd0ce6a)
+
+### Violin
+```python
+sns.catplot(data=tips, kind="violin", x="day", y="total_bill", hue="smoker")
+```
+![introduction_23_0](https://github.com/magatonman/magatonman.github.io/assets/47918242/68b68934-4acc-4751-8195-8e320800db79)
+
+### Bar
+```python
+sns.catplot(data=tips, kind="bar", x="day", y="total_bill", hue="smoker")
+```
+![introduction_25_0](https://github.com/magatonman/magatonman.github.io/assets/47918242/84e50396-f552-4c58-bbd9-bc6d4098410f)
+
+
+# 출처
+* <https://seaborn.pydata.org/tutorial/introduction.html>
