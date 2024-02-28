@@ -1,0 +1,54 @@
+---
+title:  "Julia Sets"
+excerpt: "OpenGL로 쥘리아 집합 구현"
+last_modified_at: 2024-02-28
+categories:
+  - OpenGL
+tags:
+  - OpenGL
+---
+# 계산
+* 임의의 복소수 $c$에 대해 쥘리아 집합 $J_c$는 $\{p|p\in P \cap p_{i+1}=p^2_i+c \}$을 만족시키는 $p$들의 집합을 의미한다.
+
+
+# 코드
+```cpp
+class Complex{
+  float r, i;
+}
+
+void Julia(Complex p, Complex c, int &i, float &r)
+{
+  int maxIterations=256;
+  for (i=0; i < maxIterations; i++)
+  {
+    //p_{i+1}과 그 값의 절댓값의 제곱을 계산
+    p=p*p+c;
+    rSqr=p.re*p.re+p.im*p.im;
+
+    //편의상 계산을 과도하게 반복하는 것 방지
+    if (rSqr>4)
+      break;
+  }
+  //실제 절댓값 계산 종료
+  r=sqrt(rSqr);
+}
+```
+
+실제 집합의 계산 과정 자체는 크게 어렵지 않다. 그러나, 쥘리아 집합은 프랙탈 구조이기에 확대하면 저 식을 또 재귀적으로 계산해야 한다...
+
+# Mapping
+
+# World Space to NDC
+$\frac{x_n-(-1)}{1-(-1)}=\frac{x_w-(w.l)}{w.r-w.l}\\
+x_n=2\frac{x_w-(w.l)}{w.r-w.l}-1$
+
+여기서, 임의의 점 $x_n=Ax_w+B$을 새로 하나 잡으면, 그 점의 좌표는 이하와 같은 방식으로 계산할 수 있다.
+
+$A=\frac{2}{w.r-w.l}, B=-\frac{w.r+w.l}{w.r-w.l}$
+
+같은 방식으로, 너비가 $w$, 높이가 $h$인 경우에는 
+
+$\frac{x_s-origin.x}{w}=\frac{x_n-(-1)}{1-(-1)}\\
+x_s=w\frac{x_n+1}{2}+origin.x$
+와 같은 식으로 일반화할 수 있다.
