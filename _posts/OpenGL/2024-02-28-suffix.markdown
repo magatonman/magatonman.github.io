@@ -1,0 +1,28 @@
+---
+title:  "OpenGL의 데이터 유형"
+excerpt: "OpenGL 접미사"
+last_modified_at: 2024-02-28
+categories:
+  - OpenGL
+tags:
+  - OpenGL
+---
+# 
+# OpenGL의 데이터 유형
+OpenGL에서는 명령어의 접미사를 통해 다루는 데이터의 유형을 결정한다.
+
+|접미사|데이터 유형|대응하는 C 유형|OpenGL에서의 유형|
+|---|---|---|---|
+|b|8비트 정수|signed char|GLbyte|
+|s|16비트 정수|short|GLshort|
+|i|32비트 정수|int|GLint|
+|f|32비트 부동소수점|float|GLfloat|
+|d|64비트 double|double|GLdouble|
+|ub|8비트 unsigned int|unsigned char|GLubyte|
+|us|16비트 unsigned int|unsigned short|GLUshort|
+|ui|32비트 unsigned int|unsigned int|GLuint|
+
+예를 들어
+ 
+ * ``glUniform2fv()``는 2개의 GLfloat 유형을 원소로 가지는 벡터 한 개를 입력값으로 받는다.
+ * ``glColor3d()``는 3개의 GLdouble 유형의 원소 3개를 입력값으로 받는다.
