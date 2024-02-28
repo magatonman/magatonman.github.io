@@ -7,7 +7,6 @@ categories:
 tags:
   - OpenGL
 ---
-# 
 # OpenGL의 데이터 유형
 OpenGL에서는 명령어의 접미사를 통해 다루는 데이터의 유형을 결정한다.
 
