@@ -1,0 +1,41 @@
+---
+title:  "CMOS"
+excerpt: "CMOS"
+last_modified_at: 2024-03-22
+categories:
+  - FPGA
+tags:
+  - FPGA
+---
+# CMOS
+NMOS, 혹은 PMOS만 사용하는 것만으로도 AND, OR, NAND, NOR 등을 전부 구현하는 것이 가능하다.
+
+![스크린샷 2024-03-22 152747](https://github.com/magatonman/magatonman.github.io/assets/47918242/a825be3e-3878-43e9-8915-b39eef721efa)
+
+
+일반적으로, NMOS 회로는 NMOS 트랜지스터들을 모아서 만든 회로(Pull-down Network)와 저항을 연결해, 이 사이에 전압이 흐르는가 안 흐르는가의 여부를 On/Off의 판단 기준으로 삼도록 구성한다.
+
+위에 있는 저항을 PMOS 트랜지스터들을 이용한 회로(Pull-up Network)로 바꾼 것이 CMOS 회로다.
+## NOT
+![스크린샷 2024-03-22 152235](https://github.com/magatonman/magatonman.github.io/assets/47918242/e5f9e628-10c5-453e-83e9-07fec6cb555a)
+
+
+$T_1$은 PMOS, $T_2$는 NMOS다. 전압이 흐른다면 $T_2$가, 흐르지 않는다면 $T_1$이 활성화된다.
+
+* 전압이 흐를 경우: $T_1은 비활성화, $T_2$는 활성화된 상태이므로, Gate와 Source 사이 전압인 $V_{GS}$가 문턱 전압보다 높은 상태가 된다. 
+
+## NAND
+![스크린샷 2024-03-22 160853](https://github.com/magatonman/magatonman.github.io/assets/47918242/531dbcb9-84b6-48f3-b555-9be30e2c9dec)
+
+이 회로에서 $V_f$ 위에 있는 $T_1$, $T_2$는 PMOS, 밑에 있는 $T_3$, $T_4$는 NMOS다.
+
+* 두 전압 모두 들어오지 않는 경우: 위쪽에 있는 2개의 PMOS들만 활성화된 상태가 된다. 당연히 $V_f$로 전류가 흐른다.
+* 둘 중 하나만 들어오는 경우: 직렬로 연결된 PDN이 열린 상태가 되기 때문에 전압이 $V_{DD}$가 된다.
+* 둘 다 전압이 들어오는 경우: PDN이 전부 닫힌 상태가 되어 $f$가 GND와 연결된다. 즉 전압이 흐르지 않음.
+
+|$x_1$|$x_2$|$T_1$|$T_2$|$T_3$|$T_4$|$f$|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|0|0|on|on|off|off|1|
+|0|1|on|off|off|on|1|
+|1|0|off|on|on|off|1|
+|1|1|off|off|on|on|0|
