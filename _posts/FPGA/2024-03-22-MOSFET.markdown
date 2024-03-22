@@ -63,6 +63,7 @@ PMOS는 도핑된 부분이 p-type이다. 전압이
 |0|1|1|
 |1|0|1|
 |1|1|0|
+
 으로 나타낼 수 있고, 이는 NAND 회로와 동일하다.
 ## NOR
 ![NOR](https://github.com/magatonman/magatonman.github.io/assets/47918242/d29d56d0-3489-4d8a-92a8-9ca9813f67ca)
