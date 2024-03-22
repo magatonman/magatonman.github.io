@@ -78,6 +78,7 @@ PMOS는 도핑된 부분이 p-type이다. 전압이
 |0|1|0|
 |1|0|0|
 |1|1|0|
+
 ## AND
 ![image](https://github.com/magatonman/magatonman.github.io/assets/47918242/61a90f5c-f017-435c-b7a2-7793b58e2ab9)
 
