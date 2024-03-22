@@ -1,0 +1,89 @@
+---
+title:  "MOSFET"
+excerpt: "Metal Oxide Transistors"
+last_modified_at: 2024-03-22
+categories:
+  - FPGA
+tags:
+  - FPGA
+---
+# MOSFET
+컴퓨터 공학 초기에 사용한 트랜지스터인 BJT(Bipolar Junction Transistor, 접합형 트랜지스터)를 개량한 것이다.
+
+기본적으로 금속 산화막을 반도체 위에 증착하는 방식으로 제조하며, 그렇기 때문에 MOSFET이라는 이름이 붙었다. (금속 산화막=Metal Oxide)
+
+아래쪽에 있는 반도체의 종류와 그 위에 있는 Source, Drain 구역의 종류(둘은 동일하고, 어느 쪽에 높은 / 낮은 전압을 가하느냐에 따라 이름이 바뀐다) 에 따라 nMOS와 pMOS로 나뉜다. 이 때 MOSFET의 앞에 붙는 이름은 Source와 Drain 구역의 형태에 따라 정한다.
+
+# 스위치로서의 MOSFET
+MOSFET은 Source의 전압과 Drain의 전압의 차이에 따라 전류가 흐르게 하거나 흐르지 않는다. 그리고 이 가운데 있는 Gate에 가하는 전압의 세기에 따라, 전자 혹은 양공이 흐를 수 있게 되어 전류가 흐르는지의 여부를 조정할 수 있게 된다.
+
+## 전압
+ * $V_T$: 문턱 전압으로, 이 값을 기준으로 하여 전압이 이 값보다 높거나 / 낮거나 하는 것을 기준으로 True / False를 가른다.
+ * $V_{SS}$: Source 단자에 공급되는 전압으로, 전압의 최소 한계점이다. 
+ * $V_{DD}$: Drain 단자에 공급되는 전압, 즉 전원 장치가 공급하는 전압이다. 일반적으로, 1~5볼트 사이의 전압을 이용한다.
+ * $V_{1, min}$: $V_T$ 이상인 값 중 논리 값 1을 표현할 수 있는 최소값이다.
+ * $V_{0, max}$: $V_T$ 이하인 값 중 논리값 0을 표현할 수 있는 최댓값이다.
+
+## NMOS의 경우
+NMOS는 도핑된 부분이 n-type이다. 전압이 
+낮은 쪽이 Source, 높은 쪽이 Drain이 된다.
+
+이 때 Gate에 문턱 전압보다 높은 전압을 흘린다면 Source와 Drain 사이에 전자가 흐를 수 있게 된다. 전류가 흐를 수 있게 되고, 전압이 없다면 채널이 없어 전류가 흐를 수 없다.
+
+## PMOS의 경우
+PMOS는 도핑된 부분이 p-type이다. 전압이 
+높은 쪽이 Source, 낮은 쪽이 Drain이 된다.
+
+이 경우에는 전압을 너무 높게 걸지 않아야 양공이 흐를 수 있게 된다. 즉 NMOS와 반대.
+
+# MOSFET을 이용한 논리회로
+트랜지스터를 스위치처럼 사용할 수 있다는 것을 생각하면, 이를 통해 논리회로를 구성할 수 있다.
+
+아래에 있는 사례는 전부 NMOS를 이용한 것이지만, PMOS를 통해서도 같은 작업이 가능하다.
+## NOT
+![NMOS NOT](https://github.com/magatonman/magatonman.github.io/assets/47918242/cadcfed3-2203-4f90-9964-9c736bd41195)
+
+이 논리 회로에서 Gate에 전압이 없다면 NMOS는 비활성화되고, $V_f$는 $V_{DD}$와 연결된다.
+
+반대로, 전압을 흘려 준다면 트랜지스터가 켜진 상태가 되고, $V_f$는 GND와 연결된다.
+
+즉 $V_f$의 상태와 $V_x$는 정반대이다.
+## NAND
+![NMOS NAND](https://github.com/magatonman/magatonman.github.io/assets/47918242/e6d1ec34-29ae-44d8-9b52-badd4357232a)
+
+2개의 NMOS를 일렬로 연결하면 이상과 같은 형태가 된다.
+
+이 경우에는 $V_f$가 GND와 연결되기 위해서는 두 트랜지스터의 Gate에 전부 전압이 가해져야 한다.
+
+전류가 흐르는 상태를 1, 그렇지 않은 상태를 0이라고 하면
+
+|$x_1$|$x_2$|$f$|
+|---|---|---|
+|0|0|1|
+|0|1|1|
+|1|0|1|
+|1|1|0|
+으로 나타낼 수 있고, 이는 NAND 회로와 동일하다.
+## NOR
+![NOR](https://github.com/magatonman/magatonman.github.io/assets/47918242/d29d56d0-3489-4d8a-92a8-9ca9813f67ca)
+
+이 경우에는 트랜지스터 둘 중 하나라도 Gate에 전압이 가해진다면 $V_f$가 GND와 연결된다.
+
+진리표는 이하와 같다.
+
+|$x_1$|$x_2$|$f$|
+|---|---|---|
+|0|0|1|
+|0|1|0|
+|1|0|0|
+|1|1|0|
+## AND
+![image](https://github.com/magatonman/magatonman.github.io/assets/47918242/61a90f5c-f017-435c-b7a2-7793b58e2ab9)
+
+위 회로의 좌측은 NAND와 동일하다. 그러나 여기서는 NAND에서의 $V_f$가 우측에 있는 NOT 회로의 Gate 전압 역할을 하게 된다.
+
+즉 좌측 회로의 트랜지스터 2개의 Gate에 전압이 전부 흐를 경우에만 우측 회로의 트랜지스터의 Gate가 비활성화되고 $V_f$가 $V_{DD}$가 될 수 있다.
+## OR
+![image](https://github.com/magatonman/magatonman.github.io/assets/47918242/9d7431b8-68ca-4787-b7c6-ec5c0962a7da)
+
+기본적인 원리는 AND와 동일하다. 좌측의 회로를 NOR로 변경할 경우 두 트랜지스터의 Gate에 전부 전압을 걸지 않을 경우에만 우측 회로의 Gate 전압이 $V_{DD}$가 되기 때문에 $V_f$가 0이 된다.
