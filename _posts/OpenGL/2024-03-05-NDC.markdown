@@ -1,0 +1,36 @@
+---
+title:  "Normalized Device Coordinates"
+excerpt: "NDC"
+last_modified_at: 2024-02-28
+categories:
+  - OpenGL
+tags:
+  - OpenGL
+---
+# Normalized Device Coordinates
+사용자가 모니터를 통해 보기 전에 만들어지는 2차원 좌표계로, 3차원으로 만들어진 그래픽 공간을 2차원에 사영하는 것으로 만들어진다.
+
+'Canonical Screen Space'라 하기도 한다.
+# World Space to NDC
+NDC는 화면에 이미지를 띄우기 전에 만들어지는 좌표이기 때문에 유한한 크기를 가지고 있으며, $x$축과 $y$축의 좌표의 최댓값과 최솟값은 $\pm1.0$이다. 
+
+그래서, World Space의 점 $x_w$를 NDC의 점 $x_n$으로 맵핑할 때에는 이하와 같은 비례식을 세울 수 있다.
+
+$$\frac{x_n-(-1)}{1-(-1)}=\frac{x_w-(w.l)}{w.r-w.l}$$
+
+그리고 이 비례식을 $x_n$에 대해서 풀어 쓰면 이하와 같다.
+
+$$x_n=2\frac{x_w-(w.l)}{w.r-w.l}-1$$
+
+이 식을 $x_n$과 $x_w$에 대한 일차방정식의 형태로 정리한다면, 
+
+$$x_n=\frac{2}{w.r-w.l}x_w-\frac{w.r+w.l}{w.r-w.l}$$
+으로 정리가 가능하다.
+# NDC to World Space
+이번에는 NDC 좌표를 World Space에 맵핑하는 경우이다.
+
+아까와 같은 방식으로, 
+$$\frac{x_n-(-1)}{1-(-1)}=\frac{x_s-origin.x}{w}$$
+로 비례식을 세울 수 있고, 이 식을 $x_s$에 대한 일차방정식 형태로 풀 경우
+$$x_s=w\frac{x_n+1}{2}+origin.x$$
+가 된다.
