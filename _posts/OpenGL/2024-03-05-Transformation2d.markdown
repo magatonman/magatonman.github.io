@@ -12,6 +12,7 @@ tags:
  $$x'=x+t_x\\y'=y+t_y$$
 
 행렬로 표현하면 이하와 같다.
+
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -51,6 +52,7 @@ $$
 $$x'=\cos\theta x-\sin\theta x\\
 y'=\sin\theta x+\cos\theta x$$
 의 형태로 새로운 좌표를 잡는다. 증명은 이하와 같다.
+
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -69,6 +71,7 @@ $$x'=\cos\theta x+\sin\theta x\\
 y'=-\sin\theta x+\cos\theta x$$
 를 이용한다.
 이는
+
 $$
    \begin{bmatrix} 
    \cos\theta & -\sin\theta  \\
@@ -90,6 +93,7 @@ y'=-\sin\theta x+\cos\theta x+t_y$$
 
 # 2D의 3D화
 존재하지 않는 가상의 z축 한 개를 생성하면, 이동, 회전 등 여려 유클리드 변환을 한 개의 행렬 곱셈으로 처리할 수 있다.
+
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -105,6 +109,7 @@ $$\begin{bmatrix}
    1\\
    \end{bmatrix} 
 $$
+
 이는 항등식 $1=0x+0y+1$을 추가해 위의 식을 $3\times3$ 형태로 바꾼 것이다.
 
 # 확대 / 축소
@@ -112,6 +117,7 @@ $$
 $$x'=sx\\
 y'=sy$$
 가 된다. 일관성을 위해 $3\times3$ 형태로 바꾸면 이하와 같다.
+
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -131,6 +137,7 @@ $$
 코드로는 ```glScale(sx, sy, sz)```로 나타낸다.
 # 기울임
 x축을 기준으로 45도 기울이면 이하와 같다.
+
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -146,7 +153,9 @@ $$\begin{bmatrix}
    1\\
    \end{bmatrix} 
 $$
+
 y축의 경우
+
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -162,6 +171,7 @@ $$\begin{bmatrix}
    1\\
    \end{bmatrix} 
 $$
+
 # 반전
 $x$축 기준으로 뒤집을 경우
 $$x'=x\\
@@ -174,6 +184,7 @@ y'=y$$
 이 때 좌표축을 중심으로 반전하기 때문에 위치가 이동한다.
 
 행렬로 나타낸 결과는 이하와 같다.
+
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -189,7 +200,9 @@ $$\begin{bmatrix}
    1\\
    \end{bmatrix} 
 $$
+
 y축을 기준으로 뒤집는다면
+
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -205,8 +218,10 @@ $$\begin{bmatrix}
    1\\
    \end{bmatrix} 
 $$
+
 # 아핀 변환
 아핀 공간(원점이 없는 벡터 공간)에서 이루어지는 변환을 의미하며, 기존까지의 이동, 회전, 크기, 반전, 기울임을 일반화한 변환이다.
+
 $$\begin{bmatrix} 
    x' \\
    y' \\
