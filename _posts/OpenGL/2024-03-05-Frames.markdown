@@ -1,0 +1,81 @@
+---
+title:  "Vector, Point, and Frame"
+excerpt: "Combining Vector and Point"
+last_modified_at: 2024-04-03
+categories:
+  - OpenGL
+tags:
+  - OpenGL
+---
+# Vector, Point
+## Vector Space
+스칼라 공간 $S$ 위의 벡터 공간 $V$는 이하의 규칙 2개를 항상 만족하는 공간이다.
+
+* $\forall \vec{u}, \vec{v} \in V, \vec{u}+\vec{v} \in V$
+* $\forall \vec{u}\in V, \forall a \in V, a\vec{u} \in V$
+
+즉 임의의 두 벡터의 합이나, 벡터의 스칼라곱이 그 공간에 여전히 속한다면 벡터 공간이라고 할 수 있다.
+# 좌표 벡터
+기저벡터 $$\vec{v_1}, \vec{v_2}, \vec{v_3}$$이 존재할 때 임의의 벡터 $\vec{X}$는 $\Sigma_{i=1}^3c_i\vec{V_i}=\begin{bmatrix}
+\vec{V_1} & \vec{V_2} & \vec{V_3}
+\end{bmatrix}\begin{bmatrix}
+c_1\\c_2\\c_3
+\end{bmatrix}=V\textbf{c}$로 표현할 수 있다.
+# Vector and Point
+하지만 벡터만으로 입체를 나타낼 수는 없다. 벡터는 방향과 크기를 나타내지만, 원점에 대한 정보는 가지고 있지 않다.
+
+그리고 점, 포인트 역시 마찬가지다. 점을 아무리 많이 찍어도 연결하지 않으면 면이나 입체가 되지 않는다.
+
+따라서 이 둘을 동시에 이용해야만 특정한 점에서 얼마나 멀리, 어떤 방향으로 떨어진 점을 표시할 수 있게 된다.
+
+원점 $\dot{o}$에서 $\Sigma_{i=1}^3\vec{V_i}c_i$만큼 떨어진 점 $\dot{p}$는 이하와 같이 정의할 수 있다.
+
+$\dot{p}=\dot{o}+\Sigma_{i=1}^3\vec{V_i}c_i=\begin{bmatrix}
+\vec{V_1} & \vec{V_2} & \vec{V_3} & \dot{o}
+\end{bmatrix}\begin{bmatrix}
+c_1\\c_2\\c_3\\1
+\end{bmatrix}$
+
+# Frame
+아핀 공간에서의 Point는 Frame이라고 하며, $f^t=\begin{bmatrix}
+\vec{V_1} & \vec{V_2} & \vec{V_3} &\dot{o}
+\end{bmatrix}$로 나타낼 수 있다.
+
+기존의 벡터와 Point와의 차이라면, 동일한 프레임을 가지고 벡터와 Point를 동시에 나타낼 수 있다는 것으로, 같은 프레임에  $\begin{bmatrix}
+c_1&c_2&c_3&1
+\end{bmatrix}^T$을 내적하면 포인트가, $\begin{bmatrix}
+c_1&c_2&c_3&0
+\end{bmatrix}^T$을 내적하면 벡터가 된다.
+
+둘의 차이는 원점의 정보를 남기느냐, 남기지 않느냐로 가를 수 있다.
+
+벡터와 포인트 간의 연산은 이하의 규칙을 따른다.
+
+ * 포인트에서 포인트를 뺀 결과는 벡터이다.
+ * 포인트에 벡터를 더하면 포인트가 된다.
+ * 벡터에 스칼라를 곱하면 벡터가 된다.
+ * 그러나 포인트에는 스칼라를 곱할 수 없다.
+
+# 아핀 연산
+## Affine Combination
+아핀 공간에서는 포인트 간의 덧셈도 가능하다.
+
+$\alpha_1\begin{bmatrix}
+a_1 \\ a_2 \\ a_3 \\ 1
+\end{bmatrix}+\alpha_2\begin{bmatrix}
+b_1\\b_2\\b_3\\1
+\end{bmatrix}=\begin{bmatrix}
+\alpha_1a_1+\alpha_2b_1\\\alpha_1a_2+\alpha_2b_2\\\alpha_1a_3+\alpha_2b_3\\\alpha_1+\alpha_2
+\end{bmatrix}$
+
+단, 마지막 항이 항상 1이 되도록, 두 배율 $\alpha_1, \alpha_2$의 값을 조절해야 한다.
+
+## Affine Transformation
+$p'=\begin{bmatrix}
+a_{11} & a_{12} & a_{13} & a_{14}\\
+a_{21} & a_{22} & a_{23} & a_{24}\\
+a_{31} & a_{32} & a_{33} & a_{34}\\
+0 & 0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+c_1\\c_2\\c_3\\1
+\end{bmatrix}$
