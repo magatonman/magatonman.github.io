@@ -1,7 +1,7 @@
 ---
 title:  "2D Geometric Transformation"
 excerpt: "2D"
-last_modified_at: 2024-03-10
+last_modified_at: 2024-04-03
 categories:
   - OpenGL
 tags:
@@ -11,8 +11,38 @@ tags:
 원 좌표에 이동 거리를 더하는 식으로 새로운 좌표를 구한다.
  $$x'=x+t_x\\y'=y+t_y$$
 
+행렬로 표현하면 이하와 같다.
+$$\begin{bmatrix} 
+   x' \\
+   y' \\
+   \end{bmatrix}=
+   \begin{bmatrix} 
+   x  \\
+   y  \\
+   \end{bmatrix}+\begin{bmatrix} 
+   t_x \\
+   t_y \\
+   \end{bmatrix} 
+$$
+
 이동을 취소하기 위해서는 더한 값을 빼면 된다.
  $$x'=x-t_x\\y'=y-t_y$$
+
+당연히 행렬 표기는 이하와 같다.
+
+$$\begin{bmatrix} 
+   x' \\
+   y' \\
+   \end{bmatrix}=
+   \begin{bmatrix} 
+   x  \\
+   y  \\
+   \end{bmatrix}-\begin{bmatrix} 
+   t_x \\
+   t_y \\
+   \end{bmatrix} 
+$$
+
 
 명령어로는
 ```glTranslate(tx, ty ,tz)```와 같은 형태로 이용한다.
@@ -75,9 +105,13 @@ $$\begin{bmatrix}
    1\\
    \end{bmatrix} 
 $$
+이는 항등식 $1=0x+0y+1$을 추가해 위의 식을 $3\times3$ 형태로 바꾼 것이다.
 
-# 크기 수정
-어떤 도형의 크기를 $s$배 하고 싶다면, 이하의 행렬을 곱한다.
+# 확대 / 축소
+어떤 도형의 크기를 $s$배 하고 싶다면
+$$x'=sx\\
+y'=sy$$
+가 된다. 일관성을 위해 $3\times3$ 형태로 바꾸면 이하와 같다.
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -129,7 +163,17 @@ $$\begin{bmatrix}
    \end{bmatrix} 
 $$
 # 반전
-x축을 기준으로 뒤집으면 이하와 같다. 포토샵이나 한글과 다르게 진짜 x축, 즉 $y=0$을 기준으로 뒤집기 때문에 위치가 변경된다.
+$x$축 기준으로 뒤집을 경우
+$$x'=x\\
+y'=-y$$
+가 되고, $y$축 기준으로 뒤집을 경우 
+$$x'=-x\\
+y'=y$$
+가 된다.
+
+이 때 좌표축을 중심으로 반전하기 때문에 위치가 이동한다.
+
+행렬로 나타낸 결과는 이하와 같다.
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -162,7 +206,7 @@ $$\begin{bmatrix}
    \end{bmatrix} 
 $$
 # 아핀 변환
-기존까지의 이동, 회전, 크기, 반전, 기울임을 일반화한 형태.
+아핀 공간(원점이 없는 벡터 공간)에서 이루어지는 변환을 의미하며, 기존까지의 이동, 회전, 크기, 반전, 기울임을 일반화한 변환이다.
 $$\begin{bmatrix} 
    x' \\
    y' \\
@@ -178,3 +222,6 @@ $$\begin{bmatrix}
    1\\
    \end{bmatrix} 
 $$
+
+아핀 변환을 거친 이후에도 평행선은 여전히 평행하며, 유한공간의 점은 유한공간의 점이 된다.
+
