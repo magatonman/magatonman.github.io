@@ -1,0 +1,36 @@
+---
+title:  "Buffer"
+excerpt: "버퍼"
+last_modified_at: 2024-04-05
+categories:
+  - FPGA
+tags:
+  - FPGA
+---
+# Buffer
+성능 개선을 위해 의도적인 딜레이를 주기 위해 사용하는 회로이다.
+
+입력값 하나와 출력값 하나를 가지고 있기 때문에 수식으로는 $f=x$로 나타낼 수 있다.
+
+![image](https://github.com/magatonman/magatonman.github.io/assets/47918242/e6bb87cd-96e5-410e-9102-62a633927298)
+
+![image](https://github.com/magatonman/magatonman.github.io/assets/47918242/c6fa8aee-3907-499c-853b-0569d0225039)
+
+## Inverting Buffer
+입력값의 반대를 출력하는 버퍼다. $f=\bar{x}$로 나타낸다.
+
+사실, Inverting Buffer는 NOT 게이트와 동일하다. 논리적, 물리적인 구조도 동일하며 회로도의 기호도 동일하다.
+
+# Tri-state Buffers
+버퍼에 조정용 입력값 $e$(enable)을 추가한 형태의 버퍼다. 이 버퍼는 $e$가 1일 때는 일반적인 버퍼처럼 작동하고, $e$가 0일 때는 출력값이 $Z$(High-Impedance state)로 고정된다.
+![image](https://github.com/magatonman/magatonman.github.io/assets/47918242/49529ff2-d658-49f3-aacf-b666b36dc9af)
+
+![image](https://github.com/magatonman/magatonman.github.io/assets/47918242/b40ee0b9-b8d3-4d2f-a305-8d26d63e2172)
+
+$e$와 출력값 중 어느 쪽이든 부정 연산자를 추가할 수 있다.
+
+## 예제
+![image](https://github.com/magatonman/magatonman.github.io/assets/47918242/0e2fb495-093e-4dd9-b79d-17d94d5430e4)
+
+이 회로는 2개의 Tri-state Buffer를 연결한 회로로, 이 경우 둘 중 한 버퍼는 무조건 출력값이 $Z$가 된다. 만약 $s$가 0이라면 출력값은 $x_1$이 되고, 1이라면 출력값은 $x_2$가 된다.
+
