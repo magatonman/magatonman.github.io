@@ -1,7 +1,7 @@
 ---
 title:  "Normalized Device Coordinates"
 excerpt: "NDC"
-last_modified_at: 2024-02-28
+last_modified_at: 2024-04-04
 categories:
   - OpenGL
 tags:
