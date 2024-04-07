@@ -1,7 +1,7 @@
 ---
 title: "OpenGL"
 layout: archive
-permalink: /OpenGL
+permalink: /opengl
 ---
 
 
