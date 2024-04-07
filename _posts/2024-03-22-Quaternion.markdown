@@ -3,9 +3,9 @@ title:  "Quarternion"
 excerpt: "사원수"
 last_modified_at: 2024-03-22
 categories:
-  - Graphics
+  - OpenGL
 tags:
-  - Graphics
+  - OpenGL
 ---
 # 사원수
 해밀턴에 의해 고안된 수 체계로 허수에서 발전한 형태로, 단위사원수 $1, i, j, k$는 $i^2=j^2=k^2=ijk=-1$을 만족하며 세 수는 서로 다른 수다.
