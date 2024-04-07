@@ -6,6 +6,8 @@ main:
      url: /algorithm/
    - title: "PS"
      url: /ps/
+   - title: "OpenGL"
+     url: /OpenGL/
   # - title: "Sample Posts"
   #   url: /year-archive/
   # - title: "Sample Collections"
