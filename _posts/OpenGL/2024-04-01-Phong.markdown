@@ -1,0 +1,40 @@
+---
+title:  "Phong Illumination"
+excerpt: "How to Handle lignt in OpenGL"
+last_modified_at: 2024-04-02
+categories:
+  - OpenGL
+tags:
+  - OpenGL
+---
+# Phong Illumination
+일반적인 경우 빛의 반사를 모델링하는 방식은 Phong Illumination Model(퐁 조명 모형)에 의해 이루어진다. Phong이라는 이름은 이 알고리즘을 설계한 베트남의 컴퓨터 과학자 Bui Tuong Phong에서 따 온 것.
+
+퐁 조명은 4가지 빛을 하나로 합친 결과물을 모델링하며, 이 4가지 구성 요소는 이하와 같다.
+
+* Ambient Light(간접광원)
+* Diffuse Light(난반사 광원)
+* Specular Light(정반사 광원)
+* Emissive Light(자체적으로 발산하는 광원)
+
+# Ambient
+직접광원의 밝기를 $I_{i, a}$, 반사할 때의 계수를 $k_a$라고 하면  간접광원의 밝기는 이하와 같다.
+
+$$I_{r, a}=k_aI_{i,a}$$
+
+# Diffuse
+입사한 빛의 밝기를 $I_i$라 하고 단위법선벡터를 $\hat{N}$, 입사 방향과 각도는 똑같고 방향이 반대인 벡터를 $\hat{N}$이라고 하면 난반사된 빛의 세기는 이하와 같이 정의할 수 있다.
+$$I_{r, d}=k_dI_i\max ((\hat{N} \cdot\hat{L}), 0)$$
+# Specular
+카메라(혹은 눈)과 표면을 잇는 단위벡터를 $\hat{V}$, 반사각의 벡터를 $\hat{R}$이라 하고, 이 때 $\hat{V}, \hat{R}$ 간의 각도를 $\phi$라 하면 
+$$I_{r, s}=k_sI_i\max ((\hat{V} \cdot\hat{R}), 0)^{n_s}$$
+가 된다. 여기서 $n_s$는 경면 지수를 의미한다.
+# Emissive
+물체에 따라 달라지기 때문에 상수 $m_e$로 나타낸다.
+# Wrap-Up
+
+이들을 하나로 합친 결과는 이하와 같다.
+
+$$I_{r}=\Sigma_{j=1}^{L}k_aI_{i,a}+k_dI_i\max ((\hat{N} \cdot\hat{L}), 0)+k_sI_i\max ((\hat{V} \cdot\hat{R}), 0)^{n_s}$$
+
+여기서 $L$은 광원의 수를 의미한다.
